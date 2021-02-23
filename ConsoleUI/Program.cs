@@ -25,6 +25,12 @@ namespace ConsoleUI
             var result = rentalManager.UpdateReturnDate(2);
             Console.WriteLine(result.Message);
 
+            var result2 = rentalManager.GetRentalDetails();
+            foreach (var item in result2.Data)
+            {
+                Console.WriteLine("Car name: {0} Customer Name {1} Rent Date {2} Return Date {3}", item.CarName, item.CustomerName, item.RentDate, item.ReturnDate);
+
+            }
 
 
             //CarManager carManager = new CarManager(new EfCarDal());
