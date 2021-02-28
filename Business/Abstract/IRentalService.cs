@@ -16,5 +16,7 @@ namespace Business.Abstract
         IResult CheckReturnDate(int carId);
         IResult UpdateReturnDate(int Id);
         IDataResult<List<RentalDetailDto>> GetRentalDetails();
+        IDataResult<Rental> GetById(int rentalId);
+
     }
 }
