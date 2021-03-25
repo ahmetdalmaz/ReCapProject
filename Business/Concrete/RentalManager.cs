@@ -33,7 +33,7 @@ namespace Business.Concrete
            
         }
 
-        public IResult CheckReturnDate(int carId)
+        private IResult CheckReturnDate(int carId)
         {
           var result= _rentalDal.Get(c => c.ReturnDate == null && c.CarId == carId);
             if (result!=null)
