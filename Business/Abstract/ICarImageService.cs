@@ -9,7 +9,7 @@ namespace Business.Abstract
 {
     public interface ICarImageService
     {
-        IResult Add(IFormFile file,CarImage carImage);
+        IResult Add(IFormFile file, CarImage carImage);
 
         IResult Update(IFormFile file, CarImage carImage);
 
@@ -17,9 +17,8 @@ namespace Business.Abstract
 
         IDataResult<List<CarImage>> GetAll();
 
-        IDataResult<List<CarImage>> Get(CarImage carImage);
-
         IDataResult<List<CarImage>> GetImagesByCarId(int carId);
+
 
 
     }

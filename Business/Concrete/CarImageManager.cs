@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.Constants;
 using Core.Business;
 using Core.Utilities.Helpers;
 using Core.Utilities.Results;
@@ -14,22 +15,21 @@ namespace Business.Concrete
 {
     public class CarImageManager : ICarImageService
     {
-        ICarImageDal _CarImageDal;
-        ICarService _carService;
+        ICarImageDal _CarImageDal;   
 
         public CarImageManager(ICarImageDal carImageDal, ICarService carService)
         {
-            _CarImageDal = carImageDal;
-            _carService = carService;
+           _CarImageDal = carImageDal;
+            
         }
 
         public IResult Add(IFormFile file,CarImage carImage)
         {
             BusinessRules.Run(CheckCarImageCount(carImage.CarId));
-
-            carImage.ImagePath = FileHelper.Add(file);         
+            carImage.ImagePath = FileHelper.Add(file);
+            carImage.Date = DateTime.Now;
             _CarImageDal.Add(carImage);
-            return new SuccessResult();
+            return new SuccessResult(Messages.CarImageAdded);
          
         }
 
@@ -38,7 +38,7 @@ namespace Business.Concrete
         {
             FileHelper.Delete((_CarImageDal.Get(c => c.Id == carImage.Id).ImagePath));
             _CarImageDal.Delete(carImage);
-            return new SuccessResult();
+            return new SuccessResult(Messages.CarImageDeleted);
         }
 
         public IDataResult<List<CarImage>> GetAll()
@@ -59,29 +59,20 @@ namespace Business.Concrete
         }
         
         private IDataResult<List<CarImage>> CheckIfCarImageExists(int carId) 
-        {
-              IDataResult<Car> result = _carService.GetById(carId);
-           
-
-            if (result==null)
-            {
+        {                          
                 string path = Environment.CurrentDirectory + @"\wwwroot\Uploads\default.jpg";
                 List<CarImage> carImages = _CarImageDal.GetAll(c => c.CarId == carId);
-                if (!carImages.Any())
-                {
+            if (!carImages.Any())
+            {
+
                     List<CarImage> carImage = new List<CarImage>();
                     carImage.Add(new CarImage { CarId = carId, Date = DateTime.Now, ImagePath = path });
                     return new SuccessDataResult<List<CarImage>>(carImage);
 
 
-                }
-                return new SuccessDataResult<List<CarImage>>(carImages);
-
             }
-            return new ErrorDataResult<List<CarImage>>();
-
-            
-                                    
+                                                         
+                return new SuccessDataResult<List<CarImage>>(carImages);                                                                    
         }
        
 
@@ -100,10 +91,7 @@ namespace Business.Concrete
 
         }
 
-        IDataResult<List<CarImage>> ICarImageService.Get(CarImage carImage)
-        {
-            throw new NotImplementedException();
-        }
+      
 
         public IDataResult<List<CarImage>> GetImagesByCarId(int carId)
         {
@@ -112,5 +100,7 @@ namespace Business.Concrete
             return dataResult;
 
         }
+
+        
     }
 }

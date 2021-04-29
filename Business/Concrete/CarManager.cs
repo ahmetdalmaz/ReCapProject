@@ -54,23 +54,11 @@ namespace Business.Concrete
             
         }
 
-        private IDataResult<Car> CheckCarId(int carId) 
-        {
-            var result = _carDal.Get(c => c.Id == carId);
-
-            if (result!=null)
-            {
-                return new SuccessDataResult<Car>(result);
-            }
-            return new ErrorDataResult<Car>();
         
-        }
 
         public IDataResult< Car> GetById(int carId)
         {
-            IDataResult<Car> result = BusinessRules.Run<Car>(CheckCarId(carId));
-         
-            return result;
+            return new SuccessDataResult<Car>(_carDal.Get(c => c.Id == carId));
         }
 
         public IDataResult< List<CarDetailDto>> GetCarDetails()
@@ -79,6 +67,8 @@ namespace Business.Concrete
 
              
         }
+
+
 
         public IResult Update(Car car)
         {

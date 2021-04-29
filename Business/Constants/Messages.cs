@@ -36,6 +36,8 @@ namespace Business.Constants
         public static string RentalAddedError= "Araç kiraya verilemez.Henüz teslim edilmemiştir";
         public static string RentalReturnDateUpdated= "Araç teslim edildi";
         public static string RentalReturnDateError = "Araç zaten teslim edilmiş";
-
+        public static string CarImageAdded = "Araç resmi eklendi";
+        public static string CarImageDeleted = "Araç resmi silindi";
+        public static string CarImageUpdated = "Araç resmi güncellendi";
     }
 }

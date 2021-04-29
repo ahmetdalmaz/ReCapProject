@@ -19,21 +19,5 @@ namespace Core.Business
             return null;
         
         }
-
-
-        public static IDataResult<T> Run<T>(params IDataResult<T>[] logics)
-        {
-
-            foreach (var logic in logics)
-            {
-                if (!logic.Success)
-                {
-                    return logic;
-                }
-            }
-            return null;
-
-
-        }
     }
 }
